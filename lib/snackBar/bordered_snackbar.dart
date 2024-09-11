@@ -1,0 +1,233 @@
+import 'dart:ui';
+import 'package:flutter/material.dart';
+import 'package:pro_kit_snackbar/snackBar/snackbar_enum.dart';
+
+class BorderedSnackBar extends StatefulWidget {
+  final String title;
+  final String message;
+  final Color? color;
+  final ProKitNotificationType notificationType;
+  final TextStyle? titleTextStyle;
+  final TextStyle? messageTextStyle;
+  final ProKitSnackBarType snackBarType;
+  final double? width;
+  final double? height;
+  final Widget? customIcon;
+
+  const BorderedSnackBar({
+    super.key,
+    required this.title,
+    required this.message,
+    required this.notificationType,
+    this.color,
+    this.titleTextStyle,
+    this.messageTextStyle,
+    required this.snackBarType,
+    this.width,
+    this.height,
+    this.customIcon,
+  });
+
+  @override
+  _BorderedSnackBarState createState() => _BorderedSnackBarState();
+}
+
+class _BorderedSnackBarState extends State<BorderedSnackBar>
+    with SingleTickerProviderStateMixin {
+  late AnimationController _controller;
+  late Animation<double> _opacityAnimation;
+  late Animation<Offset> _slideAnimation;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(
+      duration: const Duration(milliseconds: 300),
+      vsync: this,
+    );
+
+    _opacityAnimation = CurvedAnimation(
+      parent: _controller,
+      curve: Curves.easeInOut,
+    );
+
+    _slideAnimation = Tween<Offset>(
+      begin: const Offset(0.0, -1.0),
+      end: Offset.zero,
+    ).animate(CurvedAnimation(
+      parent: _controller,
+      curve: Curves.easeInOut,
+    ));
+
+    _controller.forward();
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
+    final bool isMobile = size.width <= 768;
+    final hsl =
+        HSLColor.fromColor(widget.color ?? widget.notificationType.color!);
+    final hslDark = hsl.withLightness((hsl.lightness - 0.1).clamp(0.0, 1.0));
+
+    return SlideTransition(
+      position: _slideAnimation,
+      child: FadeTransition(
+        opacity: _opacityAnimation,
+        child: Stack(
+          children: [
+            Container(
+              alignment: Alignment.center,
+              width: widget.width ?? size.width * (isMobile ? 0.85 : 0.5),
+              height: widget.height ?? size.height * 0.1,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(12),
+                border: widget.snackBarType == ProKitSnackBarType.bordered
+                    ? Border.all(
+                        color: widget.color ?? widget.notificationType.color!,
+                        width: 2)
+                    : null,
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.2),
+                    blurRadius: 8,
+                    offset: const Offset(0, 4),
+                  ),
+                ],
+              ),
+              child: ClipRRect(
+                borderRadius: const BorderRadius.only(
+                  topLeft: Radius.circular(8),
+                  bottomLeft: Radius.circular(8),
+                  topRight: Radius.circular(12),
+                  bottomRight: Radius.circular(12),
+                ),
+                child: Stack(
+                  alignment: AlignmentDirectional.centerStart,
+                  children: [
+                    BackdropFilter(
+                      filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10), // Increased blur intensity for a smoother look
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: (widget.color ?? widget.notificationType.color!).withOpacity(0.15), // Set a semi-transparent background
+                        ),
+                        child: Transform.translate(
+                          offset: const Offset(-1, 0),
+                          child: Container(
+                            width: 5,
+                            decoration: BoxDecoration(
+                              color: (widget.color ?? widget.notificationType.color!), // Use a more translucent color
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    IntrinsicHeight(
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          /// Icon or customIcon
+                          Center(
+                            child: Container(
+                              alignment: Alignment.center,
+                              margin: const EdgeInsets.only(left: 12),
+                              padding: const EdgeInsets.all(8),
+                              decoration: BoxDecoration(
+                                color: hslDark.toColor(),
+                                shape: BoxShape.circle,
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.black.withOpacity(0.2),
+                                    blurRadius: 4,
+                                    offset: const Offset(0, 2),
+                                  ),
+                                ],
+                              ),
+                              child: widget.customIcon ??
+                                  Icon(
+                                    _getNotificationIcon(
+                                        widget.notificationType),
+                                    color: Colors.white,
+                                    size: size.height * 0.03,
+                                  ),
+                            ),
+                          ),
+                          const SizedBox(width: 16),
+                          Flexible(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                   widget.title,
+                                  style: widget.titleTextStyle ??
+                                      TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w600,
+                                        color: widget.notificationType.color,
+                                      ),
+                                ),
+                                const SizedBox(height: 4),
+                                Text(
+                                  widget.message,
+                                  maxLines: 2,
+                                  style: widget.messageTextStyle ??
+                                      TextStyle(
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w600,
+                                        color: widget.notificationType.color,
+                                      ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            Positioned(
+              right: 10,
+              top: 10,
+              child: IconButton(
+                onPressed: () {
+                  _controller.reverse().then((_) {
+                    if (Navigator.of(context).canPop()) {
+                      Navigator.of(context).pop();
+                    }
+                  });
+                },
+                icon: Icon(Icons.close,
+                    color: widget.notificationType.color,
+                    size: size.height * 0.025),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  IconData _getNotificationIcon(ProKitNotificationType type) {
+    switch (type) {
+      case ProKitNotificationType.failure:
+        return Icons.error;
+      case ProKitNotificationType.success:
+        return Icons.check_circle;
+      case ProKitNotificationType.warning:
+        return Icons.warning_amber_sharp;
+      case ProKitNotificationType.help:
+        return Icons.info;
+      default:
+        return Icons.error;
+    }
+  }
+}
