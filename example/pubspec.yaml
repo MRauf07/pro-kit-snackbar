@@ -1,5 +1,5 @@
 name: example
-description: "A new Flutter project."
+description: "ProKitSnackBar is a customizable and dynamic Flutter widget for displaying various types of snack bars with rich features, including positioning, auto-close functionality, custom icons, and notification types."
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
 version: 1.0.0+1
@@ -10,8 +10,6 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-
-  device_preview: ^1.2.0
 
   cupertino_icons: ^1.0.8
   pro_kit_snackbar:
