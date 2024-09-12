@@ -11,6 +11,8 @@ dependencies:
   flutter:
     sdk: flutter
 
+  device_preview: ^1.2.0
+
   cupertino_icons: ^1.0.8
   pro_kit_snackbar:
     path: ../

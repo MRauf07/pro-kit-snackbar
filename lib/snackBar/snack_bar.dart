@@ -12,7 +12,7 @@ void showProKitSnackBar(
   ProKitSnackBarPosition? snackBarPosition,
   Color? color,
   bool autoClose = true,
-  Duration autoCloseDuration = const Duration(seconds: 3),
+  Duration autoCloseDuration = const Duration(seconds: 4),
   double? width,
   double? height,
   TextStyle? titleTextStyle,

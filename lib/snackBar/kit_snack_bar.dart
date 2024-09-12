@@ -1,8 +1,10 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:pro_kit_snackbar/snackBar/bordered_snackbar.dart';
 import 'package:pro_kit_snackbar/snackBar/colored_snackbar.dart';
 import 'package:pro_kit_snackbar/snackBar/snackbar_enum.dart';
-
+Timer? _snackBarTimer;
 class ProKitSnackBar extends StatelessWidget {
   final String title;
   final String message;
@@ -31,7 +33,7 @@ class ProKitSnackBar extends StatelessWidget {
     this.inMaterialBanner = false,
     this.proKitSnackBarPosition,
     this.autoClose = true,
-    this.autoCloseDuration = const Duration(milliseconds: 3000),
+    this.autoCloseDuration = const Duration(milliseconds: 4000),
     this.width,
     this.height,
     this.customIcon,
@@ -39,6 +41,7 @@ class ProKitSnackBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     return snackBarType == ProKitSnackBarType.colored
         ? ColoredSnackBar(
             title: title,
@@ -157,13 +160,5 @@ class ProKitSnackBar extends StatelessWidget {
         );
       },
     );
-
-    if (snackBar.autoClose) {
-      Future.delayed(snackBar.autoCloseDuration, () {
-        if (Navigator.of(context).canPop()) {
-          Navigator.of(context).pop();
-        }
-      });
-    }
   }
 }

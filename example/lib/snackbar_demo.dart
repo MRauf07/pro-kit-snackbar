@@ -7,27 +7,24 @@ class SnackBarDemo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'ProKit SnackBar Demo',
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Text('ProKit SnackBar Grid Example'),
-        ),
-        body: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: GridView.count(
-              crossAxisCount: MediaQuery.of(context).size.width > 600 ? 3 : 2,
-              // 3 columns for larger screens, 2 for smaller
-              childAspectRatio:
-                  MediaQuery.of(context).size.width > 600 ? 4 : 2.5,
-              // Adjusts ratio for better text visibility
-              crossAxisSpacing: 8.0,
-              // Spacing between columns
-              mainAxisSpacing: 8.0,
-              // Spacing between rows
-              children: _buildSnackBarGridItems(context),
-            )),
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('ProKit SnackBar Grid Example'),
       ),
+      body: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: GridView.count(
+            crossAxisCount: MediaQuery.of(context).size.width > 600 ? 3 : 2,
+            // 3 columns for larger screens, 2 for smaller
+            childAspectRatio:
+            MediaQuery.of(context).size.width > 600 ? 4 : 2.5,
+            // Adjusts ratio for better text visibility
+            crossAxisSpacing: 8.0,
+            // Spacing between columns
+            mainAxisSpacing: 8.0,
+            // Spacing between rows
+            children: _buildSnackBarGridItems(context),
+          )),
     );
   }
 
@@ -157,15 +154,15 @@ class SnackBarDemo extends StatelessWidget {
       message: "Need help with something?",
       snackBarType: ProKitSnackBarType.bordered,
       notificationType: ProKitNotificationType.help,
-      customIcon: const Icon(Icons.help_outline, color: Colors.white),
+      customIcon: const Icon(Icons.help_outline, color: Colors.blue),
       titleTextStyle: const TextStyle(
         fontSize: 18,
         fontWeight: FontWeight.bold,
-        color: Colors.white,
+        color: Colors.blue,
       ),
       messageTextStyle: const TextStyle(
         fontSize: 14,
-        color: Colors.white70,
+        color: Colors.blue,
       ),
     );
   }
