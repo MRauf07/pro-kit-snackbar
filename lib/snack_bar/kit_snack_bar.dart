@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:pro_kit_snackbar/snackBar/bordered_snackbar.dart';
-import 'package:pro_kit_snackbar/snackBar/colored_snackbar.dart';
-import 'package:pro_kit_snackbar/snackBar/snackbar_enum.dart';
+import 'package:pro_kit_snackbar/snack_bar/bordered_snackbar.dart';
+import 'package:pro_kit_snackbar/snack_bar/colored_snackbar.dart';
+import 'package:pro_kit_snackbar/snack_bar/snackbar_enum.dart';
 
 /// A versatile widget that displays a custom SnackBar or MaterialBanner
 /// with customizable properties such as title, message, colors, icons,

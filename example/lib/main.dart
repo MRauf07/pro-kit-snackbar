@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:pro_kit_snackbar/snackBar/snack_bar.dart';
-import 'package:pro_kit_snackbar/snackBar/snackbar_enum.dart';
+import 'package:pro_kit_snackbar/snack_bar/snack_bar.dart';
+import 'package:pro_kit_snackbar/snack_bar/snackbar_enum.dart';
 
 void main() => runApp(
   MyApp(),

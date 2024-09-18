@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
-import 'package:pro_kit_snackbar/snackBar/kit_snack_bar.dart';
-import 'package:pro_kit_snackbar/snackBar/snackbar_enum.dart';
+import 'package:pro_kit_snackbar/snack_bar/kit_snack_bar.dart';
+import 'package:pro_kit_snackbar/snack_bar/snackbar_enum.dart';
 
 /// Show ProKit SnackBar
 void showProKitSnackBar(
