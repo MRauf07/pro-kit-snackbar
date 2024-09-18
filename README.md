@@ -6,7 +6,7 @@
 
 
 ## Screenshots
-<img src="https://github.com/MRauf07/assets/blob/main/prokit_assets/prokit_snack_bar.png" height='600px' />
+<img src="https://raw.githubusercontent.com/MRauf07/assets/main/prokit_assets/prokit_snack_bar.png" height='600px' />
 
 ## Features
 

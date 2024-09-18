@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
-import 'package:pro_kit_snackbar/snackBar/snackbar_enum.dart';
+import 'package:pro_kit_snackbar/snack_bar/snackbar_enum.dart';
 
 /// A customizable, animated colored snackbar with an optional icon and auto-close feature.
 ///

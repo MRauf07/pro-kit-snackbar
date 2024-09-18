@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:pro_kit_snackbar/snackBar/snack_bar_colors.dart';
+import 'package:pro_kit_snackbar/snack_bar/snack_bar_colors.dart';
 
 enum ProKitSnackBarPosition {
   topLeft,

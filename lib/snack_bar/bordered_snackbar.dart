@@ -1,7 +1,7 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
-import 'package:pro_kit_snackbar/snackBar/snackbar_enum.dart';
+import 'package:pro_kit_snackbar/snack_bar/snackbar_enum.dart';
 
 /// A custom SnackBar widget that displays a bordered SnackBar with various styles.
 ///
