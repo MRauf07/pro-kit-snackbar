@@ -3,20 +3,54 @@ import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:pro_kit_snackbar/snackBar/snackbar_enum.dart';
 
+/// A custom SnackBar widget that displays a bordered SnackBar with various styles.
+///
+/// The `BorderedSnackBar` supports different types of notifications such as success,
+/// error, warning, and help. It can be customized with colors, icons, text styles,
+/// and auto-close behavior.
 class BorderedSnackBar extends StatefulWidget {
+  /// The title of the SnackBar.
   final String title;
+
+  /// The message content of the SnackBar.
   final String message;
+
+  /// Optional color for the SnackBar's border and icon.
   final Color? color;
+
+  /// The type of notification to be displayed (e.g., success, error).
   final ProKitNotificationType notificationType;
+
+  /// Optional text style for the title.
   final TextStyle? titleTextStyle;
+
+  /// Optional text style for the message.
   final TextStyle? messageTextStyle;
+
+  /// The style of the SnackBar, whether it is bordered or not.
   final ProKitSnackBarType snackBarType;
+
+  /// Optional custom width for the SnackBar.
   final double? width;
+
+  /// Optional custom height for the SnackBar.
   final double? height;
+
+  /// Whether the SnackBar should close automatically after a duration.
+  /// Defaults to `true`.
   final bool autoClose;
+
+  /// The duration after which the SnackBar closes automatically.
+  /// Defaults to 4 seconds.
   final Duration autoCloseDuration;
+
+  /// Optional custom icon to display instead of the default icon.
   final Widget? customIcon;
 
+  /// Creates a `BorderedSnackBar` widget.
+  ///
+  /// The [title], [message], and [notificationType] are required.
+  /// The [autoCloseDuration] specifies how long the SnackBar stays visible.
   const BorderedSnackBar({
     super.key,
     required this.title,
@@ -34,10 +68,10 @@ class BorderedSnackBar extends StatefulWidget {
   });
 
   @override
-  _BorderedSnackBarState createState() => _BorderedSnackBarState();
+  BorderedSnackBarState createState() => BorderedSnackBarState();
 }
 
-class _BorderedSnackBarState extends State<BorderedSnackBar>
+class BorderedSnackBarState extends State<BorderedSnackBar>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _opacityAnimation;
@@ -47,6 +81,7 @@ class _BorderedSnackBarState extends State<BorderedSnackBar>
   void initState() {
     super.initState();
     autoCloseSnackBar();
+
     _controller = AnimationController(
       duration: const Duration(milliseconds: 300),
       vsync: this,
@@ -74,15 +109,14 @@ class _BorderedSnackBarState extends State<BorderedSnackBar>
     super.dispose();
   }
 
-  autoCloseSnackBar() {
-    /// Start the timer for auto-close if autoClose is enabled
+  /// Automatically closes the SnackBar after the specified [autoCloseDuration]
+  /// if [autoClose] is set to `true`.
+  void autoCloseSnackBar() {
     if (widget.autoClose) {
-      Future.delayed(widget.autoCloseDuration).then((value) {
+      Future.delayed(widget.autoCloseDuration).then((_) {
         if (!mounted) return;
         if (Navigator.of(context).canPop()) {
           Navigator.of(context).pop();
-
-          /// Auto close the dialog
         }
       });
     }
@@ -92,8 +126,7 @@ class _BorderedSnackBarState extends State<BorderedSnackBar>
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     final bool isMobile = size.width <= 768;
-    final hsl =
-        HSLColor.fromColor(widget.color ?? widget.notificationType.color!);
+    final hsl = HSLColor.fromColor(widget.color ?? widget.notificationType.color!);
     final hslDark = hsl.withLightness((hsl.lightness - 0.1).clamp(0.0, 1.0));
 
     return SlideTransition(
@@ -110,8 +143,9 @@ class _BorderedSnackBarState extends State<BorderedSnackBar>
                 borderRadius: BorderRadius.circular(12),
                 border: widget.snackBarType == ProKitSnackBarType.bordered
                     ? Border.all(
-                        color: widget.color ?? widget.notificationType.color!,
-                        width: 2)
+                  color: widget.color ?? widget.notificationType.color!,
+                  width: 2,
+                )
                     : null,
               ),
               child: ClipRRect(
@@ -126,22 +160,17 @@ class _BorderedSnackBarState extends State<BorderedSnackBar>
                   children: [
                     BackdropFilter(
                       filter: ImageFilter.blur(sigmaX: 40, sigmaY: 40),
-                      // Increased blur intensity for a smoother look
                       child: Container(
                         decoration: BoxDecoration(
-                          color: (widget.color ??
-                                  widget.notificationType.color!)
-                              .withOpacity(
-                                  0.15), // Set a semi-transparent background
+                          color: (widget.color ?? widget.notificationType.color!)
+                              .withOpacity(0.15),
                         ),
                         child: Transform.translate(
                           offset: const Offset(-1, 0),
                           child: Container(
                             width: 5,
                             decoration: BoxDecoration(
-                              color: (widget.color ??
-                                  widget.notificationType
-                                      .color!), // Use a more translucent color
+                              color: widget.color ?? widget.notificationType.color!,
                             ),
                           ),
                         ),
@@ -151,7 +180,6 @@ class _BorderedSnackBarState extends State<BorderedSnackBar>
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          /// Icon or customIcon
                           Center(
                             child: widget.customIcon ??
                                 Container(
@@ -170,10 +198,10 @@ class _BorderedSnackBarState extends State<BorderedSnackBar>
                                     ],
                                   ),
                                   child: SizedBox(
-                                      width: 40,
-                                      height: 40,
-                                      child: Lottie.asset(
-                                          widget.notificationType.anim!)),
+                                    width: 40,
+                                    height: 40,
+                                    child: Lottie.asset(widget.notificationType.anim!),
+                                  ),
                                 ),
                           ),
                           const SizedBox(width: 16),
@@ -225,29 +253,16 @@ class _BorderedSnackBarState extends State<BorderedSnackBar>
                     }
                   });
                 },
-                icon: Icon(Icons.close,
-                    color: widget.notificationType.color,
-                    size: size.height * 0.025),
+                icon: Icon(
+                  Icons.close,
+                  color: widget.notificationType.color,
+                  size: size.height * 0.025,
+                ),
               ),
             ),
           ],
         ),
       ),
     );
-  }
-
-  IconData _getNotificationIcon(ProKitNotificationType type) {
-    switch (type) {
-      case ProKitNotificationType.failure:
-        return Icons.error;
-      case ProKitNotificationType.success:
-        return Icons.check_circle;
-      case ProKitNotificationType.warning:
-        return Icons.warning_amber_sharp;
-      case ProKitNotificationType.help:
-        return Icons.info;
-      default:
-        return Icons.error;
-    }
   }
 }
