@@ -70,7 +70,5 @@ class MyApp extends StatelessWidget {
 ```
 
 ## Screenshots
-
-![Success SnackBar Example](screenshots/success.png)
-![Error SnackBar Example](screenshots/error.png)
+<img src="https://github.com/MRauf07/assets/blob/main/prokit_assets/prokit_snack_bar.png" height='600px' />
 
