@@ -3,6 +3,11 @@
 
 `ProKitSnackBar` is a highly customizable Flutter widget designed for displaying snack bars with advanced features. It offers extensive customization options, including positioning, auto-closing functionality, diverse notification types, and flexible design elements, making it suitable for both mobile and web platforms.
 
+
+
+## Screenshots
+<img src="https://github.com/MRauf07/assets/blob/main/prokit_assets/prokit_snack_bar.png" height='600px' />
+
 ## Features
 
 - **Customizable Positioning:** Control the SnackBar's position on the screen with options for top, center, or bottom placement.
